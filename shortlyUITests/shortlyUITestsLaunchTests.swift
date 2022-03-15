@@ -2,7 +2,7 @@
 //  shortlyUITestsLaunchTests.swift
 //  shortlyUITests
 //
-//  Created by halil ibrahim Elkan on 13.03.2022.
+//  Created by yusuf Burak elkan on 13.03.2022.
 //
 
 import XCTest
