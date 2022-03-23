@@ -1,8 +1,4 @@
 d# shortlytest
 # SHORTEN
-# SHORTEN
-# LINKSHORTEN
-# SHORTEN
-# SHORTEN
-# SHORTEN
-# SHORTEN
+#COCOAPODS, RESTAPİ/JSON, Alamofire, kullanarak ve bütün tasarımları ben oluşturdum
+
