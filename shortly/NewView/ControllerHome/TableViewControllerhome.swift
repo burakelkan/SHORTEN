@@ -14,6 +14,8 @@ class TableViewControllerhome: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationController?.isNavigationBarHidden = false
+        
         koseButton.layer.cornerRadius = koseButton.frame.size.width/2
         viewhome.layer.cornerRadius = 35
         viewhome.layer.borderWidth = 1

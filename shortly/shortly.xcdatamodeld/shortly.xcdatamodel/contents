@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19574" systemVersion="21C52" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Shortly" representedClassName="Shortly" syncable="YES" codeGenerationType="class">
-        <attribute name="error" optional="YES" attributeType="String"/>
-        <attribute name="error_code" optional="YES" attributeType="String"/>
-        <attribute name="orginalLink" optional="YES" attributeType="String"/>
         <attribute name="shortLink" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="Shortly" positionX="-63" positionY="-18" width="128" height="89"/>
+        <element name="Shortly" positionX="-63" positionY="-18" width="128" height="44"/>
     </elements>
 </model>

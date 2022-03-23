@@ -18,10 +18,11 @@ class ViewControllerlinkList: UIViewController{
     @IBOutlet weak var altView: UIView!
     @IBOutlet weak var kısaltButton: UIButton!
     @IBOutlet weak var textfield: UITextField!
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableViewLink: UITableView!
     @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var explanationLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
+    
     
     var stringArr = [String]()
     var kısalt = ""
@@ -29,8 +30,7 @@ class ViewControllerlinkList: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        titleLabel.isHidden = false
-        explanationLabel.isHidden = false
+        
         image.isHidden = false
         kısaltButton.layer.cornerRadius = 5
         ustView.layer.cornerRadius = 90
@@ -56,18 +56,17 @@ class ViewControllerlinkList: UIViewController{
           }
           semaphore.signal()
             let json = JSON(data)
+            let kontrol = json["ok"]
             let error = json["error"]
             let error_code = json["error_code"]
             let jsonResult = json["result"]
             let shortLink = jsonResult["short_link"]
-
             self.kısalt = "\(shortLink)"
             
             print("errroorrrrr=\(error_code)")
             
         switch error_code{
-        case "null" :
-            self.kısalt = "sadfas"
+       
     case 1:
             let alertController = UIAlertController(title: "SHORTEN", message: "URL Belirtilmedi", preferredStyle: .alert)
             let tamamAction = UIAlertAction(title: "Tamam", style: .destructive){
@@ -78,6 +77,7 @@ class ViewControllerlinkList: UIViewController{
     self.present(alertController, animated: true)
      })
     case 2:
+        
             if error_code == 2{
                 let alertController = UIAlertController(title: "SHORTEN", message: "Geçersiz URL gönderildi", preferredStyle: .alert)
                 let tamamAction = UIAlertAction(title: "Tamam", style: .destructive){
@@ -87,7 +87,7 @@ class ViewControllerlinkList: UIViewController{
         DispatchQueue.main.async(execute: {
         self.present(alertController, animated: true)
          })
-                self.kısalt = "Geçersiz URL gönderildi"
+//                self.kısalt = "Geçersiz URL gönderildi"
             }
     case 3:
                 let alertController = UIAlertController(title: "SHORTEN", message: "Hız sınırına ulaşıldı. Bir saniye bekleyin ve tekrar deneyin", preferredStyle: .alert)
@@ -98,7 +98,7 @@ class ViewControllerlinkList: UIViewController{
         DispatchQueue.main.async(execute: {
         self.present(alertController, animated: true)
          })
-            self.tableView.isHidden = true
+            self.tableViewLink.isHidden = true
     case 4:
                 let alertController = UIAlertController(title: "SHORTEN", message: "Hizmet şartlarımızı ihlal ettiği için IP Adresi engellendi", preferredStyle: .alert)
                 let tamamAction = UIAlertAction(title: "Tamam", style: .destructive){
@@ -118,7 +118,7 @@ class ViewControllerlinkList: UIViewController{
         DispatchQueue.main.async(execute: {
         self.present(alertController, animated: true)
          })
-            self.tableView.isHidden = true
+            self.tableViewLink.isHidden = true
     case 6:
                 let alertController = UIAlertController(title: "SHORTEN", message: "Bilinmeyen hata", preferredStyle: .alert)
                 let tamamAction = UIAlertAction(title: "Tamam", style: .destructive){
@@ -128,7 +128,7 @@ class ViewControllerlinkList: UIViewController{
         DispatchQueue.main.async(execute: {
         self.present(alertController, animated: true)
          })
-            self.tableView.isHidden = true
+            self.tableViewLink.isHidden = true
     case 7:
    let alertController = UIAlertController(title: "SHORTEN", message: "Kod belirtilmedi (kod parametresi boş", preferredStyle: .alert)
                 let tamamAction = UIAlertAction(title: "Tamam", style: .destructive){
@@ -138,7 +138,7 @@ class ViewControllerlinkList: UIViewController{
         DispatchQueue.main.async(execute: {
         self.present(alertController, animated: true)
          })
-            self.tableView.isHidden = true
+            self.tableViewLink.isHidden = true
     case 8:
                 let alertController = UIAlertController(title: "SHORTEN", message: "Geçersiz kod gönderildi kod bulunamadı/böyle bir kısa bağlantı yok", preferredStyle: .alert)
                 let tamamAction = UIAlertAction(title: "Tamam", style: .destructive){
@@ -148,7 +148,7 @@ class ViewControllerlinkList: UIViewController{
         DispatchQueue.main.async(execute: {
         self.present(alertController, animated: true)
          })
-            self.tableView.isHidden = true
+            self.tableViewLink.isHidden = true
     case 9:
                 let alertController = UIAlertController(title: "SHORTEN", message: "Gerekli parametreler eksik", preferredStyle: .alert)
                 let tamamAction = UIAlertAction(title: "Tamam", style: .destructive){
@@ -158,7 +158,7 @@ class ViewControllerlinkList: UIViewController{
         DispatchQueue.main.async(execute: {
         self.present(alertController, animated: true)
          })
-            self.tableView.isHidden = true
+            self.tableViewLink.isHidden = true
     case 10:
                 let alertController = UIAlertController(title: "SHORTEN", message: "İzin verilmeyen bir Bağlantıyı kısaltmaya çalışmak. İzin verilmeyen bağlantılar hakkında daha fazla bilgi", preferredStyle: .alert)
                 let tamamAction = UIAlertAction(title: "Tamam", style: .destructive){
@@ -168,7 +168,7 @@ class ViewControllerlinkList: UIViewController{
         DispatchQueue.main.async(execute: {
         self.present(alertController, animated: true)
          })
-            self.tableView.isHidden = true
+            self.tableViewLink.isHidden = true
                 default:
                     break
     }
@@ -182,12 +182,12 @@ class ViewControllerlinkList: UIViewController{
         let alertController = UIAlertController(title: "SHORTEN", message: "Link Silinecek", preferredStyle: .alert)
         let tamamAction = UIAlertAction(title: "Tamam", style: .destructive){
             action in
-            let point = sender.convert(CGPoint.zero, to: self.tableView)
-            guard let indexpath = self.tableView.indexPathForRow(at: point) else {return}
+            let point = sender.convert(CGPoint.zero, to: self.tableViewLink)
+            guard let indexpath = self.tableViewLink.indexPathForRow(at: point) else {return}
             self.stringArr.remove(at: indexpath.row)
-            self.tableView.beginUpdates()
-            self.tableView.deleteRows(at: [IndexPath(row: indexpath.row, section: 0)], with: .left)
-            self.tableView.endUpdates()
+            self.tableViewLink.beginUpdates()
+            self.tableViewLink.deleteRows(at: [IndexPath(row: indexpath.row, section: 0)], with: .left)
+            self.tableViewLink.endUpdates()
             self.view.endEditing(true)
         }
         let iptalAction = UIAlertAction(title: "Hayır", style: .cancel){
@@ -199,28 +199,35 @@ DispatchQueue.main.async(execute: {
 self.present(alertController, animated: true)
  })
     }
+    
+    
+    @IBAction func geri(_ sender: Any) {
+        
+    }
+    
+    
     @IBAction func kopyala(_ sender: Any) {
+        
+        
+       
+        
         UIPasteboard.general.string = kısalt
     }
     @IBAction func shortenIt(_ sender: Any) {
-        
-        DispatchQueue.main.asyncAfter(deadline: .now()+0.1) {
-            self.image.isHidden = true
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now()+0.1) {
-            self.explanationLabel.isHidden = true
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now()+0.1) {
-            self.titleLabel.isHidden = true
-        }
         request()
         if let txt = textfield.text, !txt.isEmpty {
-            self.stringArr.insert(txt, at: 0)
-            tableView.beginUpdates()
-            tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .right)
-            tableView.endUpdates()
-            textfield.text = nil
-        }
+            if kısalt != "null"{
+                DispatchQueue.main.asyncAfter(deadline: .now()+0.1) {
+                    self.image.isHidden = true
+                }
+         
+                self.stringArr.insert(txt, at: 0)
+                tableViewLink.beginUpdates()
+                tableViewLink.insertRows(at: [IndexPath(row: 0, section: 0)], with: .right)
+                tableViewLink.endUpdates()
+                textfield.text = nil
+    }
+}
         if textfield.text!.count == 0{
             textfield.placeholder = "URL belirtilmedi"
         }else if textfield.text!.count >= 1{
@@ -240,8 +247,12 @@ extension ViewControllerlinkList: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "linkList", for: indexPath) as? TableViewCelllist else {return UITableViewCell()}
+        
         cell.lbnname.text = stringArr[indexPath.row]
         cell.shorted.text = kısalt
+        self.tableViewLink.layer.cornerRadius = 9
+        self.tableViewLink.layer.borderWidth = 1
+        self.tableViewLink.layer.borderColor = UIColor.systemGray4.cgColor
         return cell
     }
 }
